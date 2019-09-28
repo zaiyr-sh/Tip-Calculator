@@ -33,6 +33,12 @@ public class TipCalculatorController {
    private TextField totalTextField;
 
    @FXML
+   private TextField peopleAmountTextField;
+
+   @FXML
+   private TextField totalForEveryoneTextField;
+
+   @FXML
    private void calculateButtonPressed(ActionEvent e) {
       try {
          BigDecimal amount = new BigDecimal(amountTextField.getText());
@@ -41,6 +47,15 @@ public class TipCalculatorController {
 
          tipTextField.setText(currency.format(tip));
          totalTextField.setText(currency.format(total));
+
+         Integer peopleAmount = new Integer(peopleAmountTextField.getText());
+
+         if (peopleAmount == 0) {
+            totalForEveryoneTextField.setText("Incorrect. Try again");
+         } else {
+            BigDecimal totalForEveryone = total.divide(new BigDecimal(peopleAmount));
+            totalForEveryoneTextField.setText(currency.format(totalForEveryone));
+         }
       }
       catch (NumberFormatException ex) {
          amountTextField.setText("Enter amount");
